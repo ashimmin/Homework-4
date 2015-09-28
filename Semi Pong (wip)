@@ -1,0 +1,61 @@
+ArrayList<Ball> particles = new ArrayList<Ball>();
+
+
+class Ball {
+  float x, y;
+  float vx, vy;
+  float radius;
+  color ballColor;
+
+    Ball() {
+      x = random(width);
+      y = random(height);
+      radius = 10;
+      vx = random(6);
+      vy = random(6);
+      ballColor = color (random(100), 100, 100);
+    }
+
+    void draw() {
+      fill(ballColor);
+      noStroke();
+      smooth();
+      ellipse(x, y, radius*2, radius*2);
+      rect( 30, mouseY - radius, radius, 80);
+    }
+
+    void move() {
+      x = x + vx;
+      y = y + vy;
+      if (x < radius || x > width-radius) {
+        vx = -vx*1.05;
+      }
+      if (y < radius || y > height-radius) {
+        vy = -vy;
+      }
+    }
+  }
+
+  Ball b, c;
+  void setup() {
+    colorMode(HSB, 100);
+    size(500, 500);
+
+    for (int i = 0; i >= 0; i--) {
+      particles.add(new Ball());
+    }
+  }
+
+
+  void draw() {
+
+    background(100);
+
+
+    for (int i = particles.size() - 1; i >= 0; i--) {
+
+      Ball part = particles.get(i);
+      part.draw();
+      part.move();
+    }
+  }
